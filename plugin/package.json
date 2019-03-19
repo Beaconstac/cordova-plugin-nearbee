@@ -14,19 +14,17 @@
       "url": "git+https://_anuragbansal@bitbucket.org/_anuragbansal/cordova-nearbee-sdk.git"
     },
     "keywords": [
-      "Toast",
-      "Notification",
       "nearbee",
       "Beacons",
+      "cordova-ios",
       "ecosystem:cordova",
       "cordova-android"
     ],
-    "engines": [
-      {
-        "name": "cordova",
-        "version": ">=3.0.0"
-      }
-    ],
+    "engines": {
+        "cordovaDependencies": {
+            "1.0.0": { "cordova-ios": ">5.0.0"}
+        }
+    },
     "author": "Anurag Bansal <anurag.sb96@gmail.com>",
     "license": "MIT",
 
