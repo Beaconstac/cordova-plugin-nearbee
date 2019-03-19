@@ -1,0 +1,34 @@
+{
+    "name": "cordova-plugin-nearbeeplugin",
+    "version": "0.0.1",
+    "description": "An Android Cordova plugin that allows users to recieve notifications from beacons",
+    "cordova": {
+      "id": "cordova-plugin-nearbeeplugin",
+      "platforms": [
+        "android",
+        "ios"
+      ]
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://_anuragbansal@bitbucket.org/_anuragbansal/cordova-nearbee-sdk.git"
+    },
+    "keywords": [
+      "Toast",
+      "Notification",
+      "nearbee",
+      "Beacons",
+      "ecosystem:cordova",
+      "cordova-android"
+    ],
+    "engines": [
+      {
+        "name": "cordova",
+        "version": ">=3.0.0"
+      }
+    ],
+    "author": "Anurag Bansal <anurag.sb96@gmail.com>",
+    "license": "MIT",
+
+    "homepage": "https://_anuragbansal@bitbucket.org/_anuragbansal/cordova-nearbee-sdk.git"
+  }

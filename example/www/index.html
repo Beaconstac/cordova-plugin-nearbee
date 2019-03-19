@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+        <title>Nearbee-Cordova</title>
+        <link rel="stylesheet" type="text/css" href="./css/index.css">
+    </head>
+    <body>
+        <div>
+            <div class="header">
+                <h2><center>Nearbee Cordova</center></h2>
+            </div>
+            <div>
+                <!-- <h4>Make sure bluetooth is on, wait for few seconds.</h4>
+                <h4>Pull down to refresh list of beacons.</h4> -->
+                <div id="mydiv">
+
+                </div>
+            </div>
+        </div>
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
+        <script src="js/pulltorefresh.js" type="text/javascript"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            function openUrl(url){
+                window.plugins.nearbeePlugin.launchUrl(url)
+            }
+        </script>
+    </body>
+</html>
