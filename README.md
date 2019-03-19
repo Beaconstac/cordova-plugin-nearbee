@@ -1,6 +1,6 @@
-#A Cordova plugin for NearBee SDK.
+# A Cordova plugin for NearBee SDK.
 
-###Steps to run Example app on Android-
+### Steps to run Example app on Android-
 
 1. Clone the repo.
 2. Setup Cordova environment in your machine.  
