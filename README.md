@@ -1,114 +1,90 @@
 # A Cordova plugin for NearBee SDK.
 
-### Steps to run Example app on Android-
+## Pre-requisites  
 
-1. Clone the repo.
-2. Setup Cordova environment in your machine.  
-    https://cordova.apache.org/docs/en/latest/guide/cli/index.html
-
-3.  Run command  
-    `cordova platforms add android`.  
-4.  Go to  
-    `platforms > android > project.properties`  
-    make target as `target=android-28`  
-    then go to  
-    `platforms > android > app > src > main`  
-    Add your API key and Orgnization ID to the AndroidManifest.xml as follows  
-
-```xml
-
-        <application>  
-            ...   
-            ...  
-            <meta-data  
-                android:name="co.nearbee.api_key"  
-                android:value="MY_DEV_TOKEN" />  
+- Set up [Cordova](https://cordova.apache.org/docs/en/latest/guide/cli/index.html)  
   
-            <meta-data  
-                android:name="co.nearbee.organization_id"  
-                android:value="123" />  
-            ...  
-        </application> 
-        
-```
-5. To run the project use  
-    `cordova run android`  
-6. Keep device's bluetooth on.  
+- An active Bluetooth connection.    
 
-###Steps to run Example app on ios-
+- Get the Developer token and Organization ID from [here](https://dashboard.beaconstac.com/#/login).  
 
-1. Clone the repo.
-2. Setup Cordova environment in your machine.  
-    https://cordova.apache.org/#getstarted  
+- Make sure to use any Cordova plugin to keep the app running in background.  
+  
+### Android  
+  
+- Android target version should be `28`.    
+  
+- Coarse Location permission.  
 
-3.  Run command  
-    `cordova platforms add ios@5.0.0`   
-4.  Go to  
-    `platforms > ios > NearbeePluginTest`  
+- Replace MY_DEV_TOKEN and MY_ORGANIZATION_ID in the AndroidManifest.xml file with proper values.  
+       
+```xml
 
-    Add your API key and Orgnization ID to the Info.plist as follows  
+    <application>
+        ...
+        <meta-data
+            android:name="co.nearbee.api_key"
+            android:value="MY_DEV_TOKEN" />
+
+        <meta-data
+            android:name="co.nearbee.organization_id"
+            android:value="123" />
+        ...
+    </application>
+
+```       
+### iOS  
+  
+- Cordova iOS platform version should be `5.0.0`.    
+  
+- Pod iOS platform version should be `10.0`.  
+
+- Notification and location permissions.  
+
+- Replace MY_DEV_TOKEN and MY_ORGANIZATION_ID in the Info.plist file with proper values    
 
 ```xml
 
-        <key>co.nearbee.api_key</key>  
-        <string>MY_DEV_TOKEN<string>  
-        <key>co.nearbee.organization_id</key>  
-        <string>123</string>  
-        
-```
+    <key>co.nearbee.api_key</key>
+    <string>MY_DEV_TOKEN<string>
+    <key>co.nearbee.organization_id</key>
+    <string>123</string>
 
-    Add the NSLocationAlwaysUsageDescription, NSLocationAlwaysAndWhenInUsageDescription, NSBluetoothPeripheralUsageDescription to Info.plist  
+```   
 
-```xml
-    
-        <key>NSLocationAlwaysUsageDescription</key>  
-        <string>To scan for beacons and show the offers around you</string>  
-        <key>NSLocationAlwaysUsageDescription</key>  
-        <string>To scan for beacons and show the offers around you</string>  
-        <key>NSLocationAlwaysUsageDescription</key>  
-        <string>To scan for beacons and show the offers around you</string>  
-        
-```
+## Configuring the project
 
-5. To run the project use  
-    `cordova build ios`  
-    Open .xcodeproj and run the app.  
+    cordova plugin add cordova-plugin-nearbee
 
-### Usage
+## Usage
 
-*In www/js/index.js -  
+ **NOTE**: Every method returns success and error callbacks.
 
-###### Initialize
+### Initialize SDK.  
 
 ````javascript
-    window.plugins.nearbeePlugin.initialize(function() {
-            console.log('initialized!');
-          }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
+    window.plugins.nearbeePlugin.initialize();
 ````
 
-###### Enable background notifications
+### Enable background notifications
+
+ If set to true the NearBee SDK will send beacon notifications in the background, when the app is not running.  
 
 ````javascript
-    window.plugins.nearbeePlugin.enableBackgroundNotifications(true, function() {
-            console.log('Enabled notifications!');
-          }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
+    window.plugins.nearbeePlugin.enableBackgroundNotifications(true);
 ````
 
-###### Start scanning
+### Start scanning
+
+ This will start the scan for the beacons.    
 
 ````javascript
-     window.plugins.nearbeePlugin.startScanning(function() {
-            console.log('started Scanning!');
-        }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
+     window.plugins.nearbeePlugin.startScanning();
 ````
 
-###### Receive nearbee notifications
+### Receive nearbee notifications
+
+ To display a UI with list of beacons, the following needs to be done:  
 
 ````javascript
      window.plugins.nearbeePlugin.nearbeeNotifications(function(notificationObject) {
@@ -118,35 +94,44 @@
         });
 ````
 
-###### Stop Scanning
+### Stop Scanning
+
+ This will start the scan for the beacons.  
 
 ````javascript
-     window.plugins.nearbeePlugin.stopScanning(function() {
-            console.log('Stopped scanning.');
-          }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
+     window.plugins.nearbeePlugin.stopScanning();
 ````
 
-###### Clearing notification cache
+### Clearing notification cache
+
+This will clear the cached server responses and will force NearBee to fetch fresh data from the server.  
 
 ````javascript
-     window.plugins.nearbeePlugin.clearNotificationCache(function() {
-            console.log('Cleared Notifications Cache.');
-          }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
+     window.plugins.nearbeePlugin.clearNotificationCache();
 ````
 
-###### Launch URL
+### Steps to run Example app on Android
 
-````javascript
-     window.plugins.nearbeePlugin.launchUrl(function(url) {
-            console.log(url);
-          }, function(err) {
-            console.log('Uh oh... ' + err);
-        });
-````
+1. Clone/Download the repo.  
 
+2.  Add required platforms  
+  
+    Android  
+    `cordova platforms add android`
+  
+    iOS  
+    `cordova platforms add ios`
+  
+3.  Follow Pre-requisites  of the plugin.  
+
+4. To run the project use  
+  
+    Android   
+    `cordova run android`  
+  
+    iOS  
+    `cordova build ios`
+  
+    Open .xcworkspace and run.  
 
 

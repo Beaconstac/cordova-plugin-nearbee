@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-id="cordova-plugin-nearbeeplugin" version="0.0.1">
+id="cordova-plugin-nearbee" version="0.0.3">
     <name>NearbeePlugin</name>
-    <description>An Android Cordova plugin that allows users to receive notifications from beacons.</description>
-    <keywords>cordova,android,nearbee,beacons,alert</keywords>
-    <repo>https://_anuragbansal@bitbucket.org/_anuragbansal/cordova-nearbee-sdk.git</repo>
+    <description>A Cordova plugin that allows users to receive notifications from beacons.</description>
+    <keywords>cordova,android,nearbee,beacons,ios</keywords>
+    <repo>https://github.com/Beaconstac/cordova-plugin-nearbee.git</repo>
     <engines>
         <engine name="cordova" version=">=3.0.0"/>
     </engines>
@@ -19,6 +19,9 @@ id="cordova-plugin-nearbeeplugin" version="0.0.1">
                 <param name="android-package" value="com.mobstac.cordova.plugin.NearbeePlugin"/>
             </feature>
         </config-file>
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-sdk" mode="merge">
+            <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="28" />
+        </edit-config>
         <source-file src="src/android/NearbeePlugin.java" target-dir="src/com/mobstac/cordova/plugin" />
     </platform>
     <platform name="ios">
@@ -26,6 +29,20 @@ id="cordova-plugin-nearbeeplugin" version="0.0.1">
             <feature name="NearbeePlugin">
                 <param name="ios-package" value="NearbeePlugin" />
             </feature>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" comment="Default usage descriptions: override as necessary in .plist">
+            <string>This app requires access to your location when the screen is on and the app is displayed.</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription" comment="iOS 11 or greater">
+            <string>This app requires constant access to your location in order to receive notifications from beacons which are in proximity of the device.</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" comment="iOS 10 or below">
+            <string>This app requires constant access to your location in order to receive notifications from beacons which are in proximity of the device.</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>bluetooth-central</string>
+            </array>
         </config-file>
         <framework src="NearBee" type="podspec" spec="0.1.0" />
         <header-file src="src/ios/NearbeePlugin.h" />
