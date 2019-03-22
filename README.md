@@ -110,7 +110,7 @@ This will clear the cached server responses and will force NearBee to fetch fres
      window.plugins.nearbeePlugin.clearNotificationCache();
 ````
 
-### Steps to run Example app on Android
+### Steps to run Example app
 
 1. Clone/Download the repo.  
 

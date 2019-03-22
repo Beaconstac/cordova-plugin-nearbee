@@ -110,28 +110,4 @@ This will clear the cached server responses and will force NearBee to fetch fres
      window.plugins.nearbeePlugin.clearNotificationCache();
 ````
 
-### Steps to run Example app on Android
-
-1. Clone/Download the repo.  
-
-2.  Add required platforms  
-  
-    Android  
-    `cordova platforms add android`
-  
-    iOS  
-    `cordova platforms add ios`
-  
-3.  Follow Pre-requisites  of the plugin.  
-
-4. To run the project use  
-  
-    Android   
-    `cordova run android`  
-  
-    iOS  
-    `cordova build ios`
-  
-    Open .xcworkspace and run.  
-
 
