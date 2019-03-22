@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-id="cordova-plugin-nearbee" version="0.0.3">
+id="cordova-plugin-nearbee" version="0.0.4">
     <name>NearbeePlugin</name>
     <description>A Cordova plugin that allows users to receive notifications from beacons.</description>
     <keywords>cordova,android,nearbee,beacons,ios</keywords>

@@ -28,7 +28,7 @@
 
         <meta-data
             android:name="co.nearbee.organization_id"
-            android:value="123" />
+            android:value="MY_ORGANIZATION_ID" />
         ...
     </application>
 
@@ -48,7 +48,7 @@
     <key>co.nearbee.api_key</key>
     <string>MY_DEV_TOKEN<string>
     <key>co.nearbee.organization_id</key>
-    <string>123</string>
+    <string>MY_ORGANIZATION_ID</string>
 
 ```   
 
@@ -96,7 +96,7 @@
 
 ### Stop Scanning
 
- This will start the scan for the beacons.  
+ This will stop the scan for the beacons.  
 
 ````javascript
      window.plugins.nearbeePlugin.stopScanning();
