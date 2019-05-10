@@ -44,7 +44,7 @@ id="cordova-plugin-nearbee" version="0.0.4">
                 <string>bluetooth-central</string>
             </array>
         </config-file>
-        <framework src="NearBee" type="podspec" spec="0.1.0" />
+        <framework src="NearBee" type="podspec" spec="0.1.2" />
         <header-file src="src/ios/NearbeePlugin.h" />
         <source-file src="src/ios/NearbeePlugin.m" />
     </platform>
