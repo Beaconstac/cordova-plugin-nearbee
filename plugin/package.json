@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-nearbee",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "A Cordova plugin that allows users to recieve notifications from beacons",
     "cordova": {
       "id": "cordova-plugin-nearbee",
@@ -22,7 +22,7 @@
     ],
     "engines": {
         "cordovaDependencies": {
-            "0.0.1": { "cordova-ios": ">=5.0.0"}
+            "0.0.1": { "cordova-ios": ">=5.0.1"}
         }
     },
     "author": "Beaconstac <support@mobstac.com> (https://www.beaconstac.com)",
