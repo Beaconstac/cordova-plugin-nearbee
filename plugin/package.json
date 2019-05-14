@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-nearbee",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A Cordova plugin that allows users to recieve notifications from beacons",
     "cordova": {
       "id": "cordova-plugin-nearbee",
