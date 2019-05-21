@@ -46,7 +46,7 @@
 ```xml
 
     <key>co.nearbee.api_key</key>
-    <string>MY_DEV_TOKEN<string>
+    <string>MY_DEV_TOKEN</string>
     <key>co.nearbee.organization_id</key>
     <string>MY_ORGANIZATION_ID</string>
 
