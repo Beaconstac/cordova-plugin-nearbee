@@ -110,7 +110,7 @@ This will clear the cached server responses and will force NearBee to fetch fres
      window.plugins.nearbeePlugin.clearNotificationCache();
 ```
 
-### Display Notification in the app
+### Overriding notification click behaviour
 
 To display the notification after opening the app
 
