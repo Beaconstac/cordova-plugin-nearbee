@@ -165,10 +165,9 @@ Add the below lines of code to `AppDelegate.m`
 didReceiveNotificationResponse:(UNNotificationResponse *)response 
 withCompletionHandler:(void (^)(void))completionHandler {
 
-    NSError *error = nil;
-    NearBee *nearBeeInstance = [NearBee sharedInstanceAndReturnError:&error];
+    NearBee *nearBee = [NearBee initNearBee];
 
-    BOOL isNearBeeNotification = [nearBeeInstance checkAndProcessNearbyNotification:response.notification];
+    BOOL isNearBeeNotification = [nearBee checkAndProcessNearbyNotification:response.notification];
     if (isNearBeeNotification) {
         completionHandler()
     } else {
