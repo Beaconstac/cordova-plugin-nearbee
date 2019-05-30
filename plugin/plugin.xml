@@ -12,8 +12,8 @@ id="cordova-plugin-nearbee" version="0.0.7">
     <js-module src="www/nearbeeplugin.js" name="nearbeePlugin">
         <clobbers target="window.plugins.nearbeePlugin" />
     </js-module>
-    <framework src="co.nearbee:nearbeesdk:1.1.7" />
     <platform name="android">
+        <framework src="co.nearbee:nearbeesdk:2.0.2" />
         <config-file target="config.xml" parent="/*">
             <feature name="NearbeePlugin">
                 <param name="android-package" value="com.mobstac.cordova.plugin.NearbeePlugin"/>
