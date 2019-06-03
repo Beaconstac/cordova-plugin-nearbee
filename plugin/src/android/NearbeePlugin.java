@@ -3,9 +3,11 @@ package com.mobstac.cordova.plugin;
 import android.util.Log;
 
 import co.nearbee.NearBee;
-import co.nearbee.NearBeeBeacon;
+import co.nearbee.models.NearBeacon;
 import co.nearbee.NearBeeException;
-import co.nearbee.NearBeeListener;
+import co.nearbee.NearBeaconListener;
+import co.nearbee.models.ProximityAttachment;
+import co.nearbee.models.BeaconAttachment;
 import co.nearbee.utils.Util;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class NearbeePlugin extends CordovaPlugin implements NearBeeListener {
+public class NearbeePlugin extends CordovaPlugin implements NearBeaconListener {
 
     private static final String INITIALIZE = "initialize";
     private static final String STOP_SCANNING = "stopScanning";
@@ -129,15 +131,25 @@ public class NearbeePlugin extends CordovaPlugin implements NearBeeListener {
     }
 
     @Override
-    public void onUpdate(ArrayList<NearBeeBeacon> beaconsInRange) {
+    public void onUpdate(ArrayList<NearBeacon> beaconsInRange) {
         JSONArray jsonArray = new JSONArray();
         try {
-            for (NearBeeBeacon beacon : beaconsInRange) {
+            for (NearBeacon beacon : beaconsInRange) {
                 JSONObject beaconJson = new JSONObject();
-                beaconJson.put("title", beacon.getNotification().getTitle());
-                beaconJson.put("description", beacon.getNotification().getDescription());
-                beaconJson.put("icon", beacon.getNotification().getIcon());
-                beaconJson.put("url", beacon.getNotification().getEddystoneURL());
+                BeaconAttachment attachment = beacon.getBestAvailableAttachment(cordova.getActivity());
+                beaconJson.put("eddystoneUID", beacon.getEddystoneUID());
+                beaconJson.put("title", attachment.getTitle());
+                beaconJson.put("description", attachment.getDescription());
+                beaconJson.put("icon", attachment.getIconURL());
+                beaconJson.put("url", attachment.getUrl());
+                if (attachment.getClass().isAssignableFrom(ProximityAttachment.class)) {
+                    ProximityAttachment pa = (ProximityAttachment) attachment;
+                    beaconJson.put("bannerType", pa.getBannerType());
+                    beaconJson.put("bannerImageUrl", pa.getBannerImageURL());
+                } else {
+                    beaconJson.put("bannerType", JSONObject.NULL);
+                    beaconJson.put("bannerImageUrl", JSONObject.NULL);
+                }
                 jsonArray.put(beaconJson);
             }
             JSONObject jsonObject = new JSONObject();
@@ -153,12 +165,12 @@ public class NearbeePlugin extends CordovaPlugin implements NearBeeListener {
     }
 
     @Override
-    public void onBeaconLost(ArrayList<NearBeeBeacon> lost) {
+    public void onBeaconLost(ArrayList<NearBeacon> lost) {
         //
     }
 
     @Override
-    public void onBeaconFound(ArrayList<NearBeeBeacon> found) {
+    public void onBeaconFound(ArrayList<NearBeacon> found) {
         //
     }
 

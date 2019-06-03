@@ -112,32 +112,42 @@ This will clear the cached server responses and will force NearBee to fetch fres
 
 ### Overriding notification click behaviour
 
-To display the notification after opening the app
 
 #### Android
 
-1. Extend the NotificationUtil class
+1. Extend the NotificationUtil class in your `your_app_dir/platforms/android/app/src/main/java/com/your_app`
 
 ```java
-public class MyNotificationUtil extends NotificationUtil {
-    
-    public MyNotificationUtil(Context context) {
+public class MyNotificationManager extends NotificationManager {
+
+    public MyNotificationManager(Context context) {
         super(context);
     }
 
     @Override
     public Intent getAppIntent(Context context) {
-    	// This is for group notification
-        return new Intent(context, YourAppActivity.class);
+        // This intent is for handling grouped notification click
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
-    public Intent getBeaconIntent(Context context, NearBeeBeacon nearBeacon) {
+    public Intent getBeaconIntent(Context context, NearBeacon nearBeacon) {
+        // This intent is for handling individual notification click
         // Pass the intent of the activity that you want to be opened on click
-        // This is for per beacon notification
-        return new Intent(context, YourWebViewActivity.class);
+        if (nearBeacon.getBusiness() != null) {
+            BeaconAttachment attachment = nearBeacon.getBestAvailableAttachment(context);
+            if (attachment != null) {
+                final Intent intent = new Intent(context, MainActivity.class);
+                // pass the url from the beacon, so that it can be opened from your activity
+                intent.putExtra("url", attachment.getUrl());
+                return intent;
+            }
+        }
+        return null;
     }
+
 }
+
 ```
 
 2. Create a `meta-data` field for the class `MyNotificationUtil` in the `Android.mainfest` file.
@@ -152,6 +162,34 @@ public class MyNotificationUtil extends NotificationUtil {
         ...
     </application>
 
+```
+
+3. Handle the intent data in your Activity's onCreate
+
+```java
+public class MainActivity extends CordovaActivity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
+
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
+
+
+        // Handle the intent here
+        if (getIntent().getStringExtra("url") != null) {
+            String url = getIntent().getStringExtra("url");
+            // Do something with the url here
+         }
+    }
+}
 ```
 
 #### iOS
