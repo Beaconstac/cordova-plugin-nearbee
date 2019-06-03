@@ -28,7 +28,4 @@
     <plugin name="cordova.plugins.diagnostic" spec="^4.0.12">
         <variable name="ANDROID_SUPPORT_VERSION" value="28.+" />
     </plugin>
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
-    <plugin name="cordova-plugin-nearbee" spec="../plugin" />
-    <engine name="android" spec="~8.0.0" />
 </widget>

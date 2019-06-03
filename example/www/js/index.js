@@ -14,7 +14,7 @@ var app = {
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        cordova.plugins.backgroundMode.enable();
+        // cordova.plugins.backgroundMode.enable();
         document.addEventListener('deviceready', () => {
             if(device.platform=='Android')
             {

@@ -48,8 +48,8 @@ id="cordova-plugin-nearbee" version="0.0.7">
         	<config>
         		<source url="https://github.com/CocoaPods/Specs.git" />
         	</config>
-        	<pods use-frameworks="false">
-        		<pod name="NearBee" spec="0.1.3" />
+        	<pods use-frameworks="true">
+        		<pod name="NearBee" spec="2.0.0" />
         	</pods>
         </podspec>
         <header-file src="src/ios/NearbeePlugin.h" />

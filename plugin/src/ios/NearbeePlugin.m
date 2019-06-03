@@ -3,7 +3,6 @@
 #import <Cordova/CDV.h>
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <UserNotifications/UserNotifications.h>
 
 static NSString *const INITIALIZE = @"Initialized NearBee SDK";
 static NSString *const STOP_SCANNING = @"Stopped Scanning";
@@ -12,7 +11,7 @@ static NSString *const CLEAR_NOTIFICATION_CACHE = @"Initialized NearBee SDK";
 static NSString *const LAUNCH_URL = @"Launched URL";
 static NSString *const ENABLE_BACKGROUND_NOTIFICATIONS = @"Enabled Notifications";
 
-@interface NearbeePlugin() <NearBeeDelegate, UNUserNotificationCenterDelegate>
+@interface NearbeePlugin() <NearBeeDelegate>
 
 @property (strong) NearBee *nearBee;
 @property (strong) CLLocationManager *locationManager;
@@ -86,29 +85,32 @@ static NSString *const ENABLE_BACKGROUND_NOTIFICATIONS = @"Enabled Notifications
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-
-- (void)onBeaconsFound:(NSArray<NearBeeBeacon *> * _Nonnull)beacons {
+- (void)didFindBeacons:(NSArray<NearBeeBeacon *> *)beacons {
     [self.beacons addObjectsFromArray:beacons];
     [self updateList:self.beacons];
 }
 
-- (void)onBeaconsLost:(NSArray<NearBeeBeacon *> * _Nonnull)beacons {
+- (void)didLoseBeacons:(NSArray<NearBeeBeacon *> *)beacons {
     [self.beacons removeObjectsInArray:beacons];
     [self updateList:self.beacons];
 }
 
-- (void)onBeaconsUpdated:(NSArray<NearBeeBeacon *> * _Nonnull)beacons {
+- (void)didUpdateBeacons:(NSArray<NearBeeBeacon *> * _Nonnull)beacons {
     [self updateList:self.beacons];
+}
+
+- (void)didUpdateState:(enum NearBeeState)state {
+    // Show State
 }
 
 - (void)updateList:(NSArray<NearBeeBeacon *> * _Nonnull)beacons {
     NSMutableArray *jsonArray = [NSMutableArray new];
     for (NearBeeBeacon *beacon in beacons) {
         NSMutableDictionary *beaconJson = [NSMutableDictionary new];
-        beaconJson[@"title"] = beacon.physicalWebTitle;
-        beaconJson[@"description"] = beacon.physicalWebDescription;
-        beaconJson[@"icon"] = beacon.physicalWebIcon;
-        beaconJson[@"url"] = beacon.physicalWebEddystoneURL;
+        beaconJson[@"title"] = [[beacon getBestAvailableAttachment] getTitle];
+        beaconJson[@"description"] = [[beacon getBestAvailableAttachment] getDescription];
+        beaconJson[@"icon"] = [[beacon getBestAvailableAttachment] getIconURL];
+        beaconJson[@"url"] = [[beacon getBestAvailableAttachment] getURL];
         [jsonArray addObject:beaconJson];
     }
     if (jsonArray.count > 0) {
@@ -125,12 +127,15 @@ static NSString *const ENABLE_BACKGROUND_NOTIFICATIONS = @"Enabled Notifications
     }
 }
 
-- (void)onError:(NSError * _Nonnull)error {
+- (void)didThrowError:(NSError * _Nonnull)error {
     NSDictionary *json = @{@"nearBeeError":[error localizedDescription]};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:json
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:jsonString];
+    [pluginResult setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.cordovaCallbackId];
 }
 
 @end
